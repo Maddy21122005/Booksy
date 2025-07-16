@@ -5,7 +5,7 @@ import booksRoute from './routes/booksRoute.js';
 import cors from 'cors';
 
 
-
+//created express app
 const app = express();
 
 // Middleware for parsing request body
@@ -13,7 +13,7 @@ app.use(express.json());
 
 // Middleware for handling CORS POLICY
 // Option 1: Allow All Origins with Default of cors(*)
-app.use(cors());
+app.use(cors()); //cors for to allow react frontend request , it will allow request of frontend port to backend port
 // Option 2: Allow Custom Origins
 // app.use(
 //   cors({
@@ -25,7 +25,7 @@ app.use(cors());
 
 app.get('/', (request, response) => {
   console.log(request);
-  return response.status(234).send('Welcome To MERN Stack Tutorial');
+  return response.status(234).send('Welcome To Booksy');
 });
 
 app.use('/books', booksRoute);

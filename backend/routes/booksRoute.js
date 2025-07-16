@@ -1,24 +1,52 @@
 import express from 'express';
 import { Book } from '../models/bookModel.js';
 
-const router = express.Router();
+const router = express.Router(); //Creates a mini server ,in which api's are defined
+
+// Route for Save a new Book
+// router.post('/', async (request, response) => {
+//   try {
+//     if (
+//       !request.body.title ||  //if any data is missing
+//       !request.body.author ||
+//       !request.body.publishYear
+//     ) {
+//       return response.status(400).send({
+//         message: 'Send all required fields: title, author, publishYear',
+//       });
+//     }
+//     const newBook = {
+//       title: request.body.title,
+//       author: request.body.author,
+//       publishYear: request.body.publishYear,
+//     };
+
+//     const book = await Book.create(newBook);
+
+//     return response.status(201).send(book);
+//   } catch (error) {
+//     console.log(error.message);
+//     response.status(500).send({ message: error.message });
+//   }
+// });
 
 // Route for Save a new Book
 router.post('/', async (request, response) => {
   try {
-    if (
-      !request.body.title ||
-      !request.body.author ||
-      !request.body.publishYear
-    ) {
+    const { title, author, publishYear, link, description } = request.body;
+
+    if (!title || !author || !publishYear) {
       return response.status(400).send({
         message: 'Send all required fields: title, author, publishYear',
       });
     }
+
     const newBook = {
-      title: request.body.title,
-      author: request.body.author,
-      publishYear: request.body.publishYear,
+      title,
+      author,
+      publishYear,
+      link,         // ✅ include this
+      description,  // ✅ include this
     };
 
     const book = await Book.create(newBook);
@@ -32,6 +60,7 @@ router.post('/', async (request, response) => {
 
 // Route for Get All Books from database
 router.get('/', async (request, response) => {
+  // will send bookdata to frontend in json format
   try {
     const books = await Book.find({});
 
